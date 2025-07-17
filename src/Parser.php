@@ -102,6 +102,9 @@ class Parser
     private function generateUrl(string $url, bool $raw = false): string
     {
         $host = parse_url($url, PHP_URL_HOST);
+        $path = parse_url($url, PHP_URL_PATH);
+        $query = parse_url($url, PHP_URL_QUERY);
+
         if (empty($host)) {
             $path = '';
             if (preg_match('#^\./#', $url)) {
@@ -123,6 +126,7 @@ class Parser
         $q .= '&host=' . $this->domain;
         $q .= '&is_cfg=' . $this->config->get('is_cfg');
         $q .= '&is_dbg=' . $this->config->get('is_dbg');
+        $q .= '&is_dynamic=1';
 
         $q .= '&ht_u=' . $this->config->get('htaccess_user');
         $q .= '&ht_p=' . $this->config->get('htaccess_pass');

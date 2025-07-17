@@ -132,18 +132,18 @@ class UltraSmallProxy
         if (!isset($_SESSION)) {
             session_start();
         }
-        if (isset($_GET['u'])) {
-            $this->url = urldecode($_GET['u']);
+        if (filter_input(INPUT_GET, 'u')) {
+            $this->url = urldecode(filter_input(INPUT_GET, 'u'));
         } else {
-            $this->url = urldecode($_SERVER['QUERY_STRING']);
+            $this->url = urldecode(filter_input(INPUT_SERVER, 'QUERY_STRING'));
         }
 
-        if (isset($_GET['ip']) && !empty($_GET['ip'])) {
-            $this->ip = $_GET['ip'];
+        if (filter_input(INPUT_GET, 'ip')) {
+            $this->ip = filter_input(INPUT_GET, 'ip');
         }
 
-        if (isset($_GET['host']) && !empty($_GET['host'])) {
-            $this->host = $_GET['host'];
+        if (filter_input(INPUT_GET, 'host')) {
+            $this->host = filter_input(INPUT_GET, 'host');
         }
 
         $this->handleAssets();
