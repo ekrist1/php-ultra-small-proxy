@@ -104,6 +104,7 @@ class Parser
         $host = parse_url($url, PHP_URL_HOST);
         $path = parse_url($url, PHP_URL_PATH);
         $query = parse_url($url, PHP_URL_QUERY);
+        $is_relative = false;
 
         if (empty($host)) {
             $path = '';
@@ -113,6 +114,7 @@ class Parser
             }
             $url = 'https://' . $this->domain . $path . $url;
             $host = $this->domain;
+            $is_relative = true;
         }
 
         $q = '';
@@ -127,6 +129,9 @@ class Parser
         $q .= '&is_cfg=' . $this->config->get('is_cfg');
         $q .= '&is_dbg=' . $this->config->get('is_dbg');
         $q .= '&is_dynamic=1';
+        if ($is_relative) {
+            $q .= '&is_relative=1';
+        }
 
         $q .= '&ht_u=' . $this->config->get('htaccess_user');
         $q .= '&ht_p=' . $this->config->get('htaccess_pass');
